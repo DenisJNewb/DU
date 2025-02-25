@@ -1,6 +1,6 @@
 ﻿namespace DU.ConsoleApp
 {
-    internal static class Extensions
+    public static class Extensions
     {
         public static bool SizeInBytes { get; set; }
 
@@ -16,14 +16,23 @@
 
         public static string SizeToString(this long size)
         {
-            if (SizeInBytes) return $"{size}b";
-            var curSize = size / Math.Pow(2, 30);
-            if (curSize > 1) return $"{curSize:N1}gb";
-            curSize = size / Math.Pow(2, 20);
-            if (curSize > 1) return $"{curSize:N1}mb";
-            curSize = size / Math.Pow(2, 10);
-            if (curSize > 1) return $"{curSize:N1}kb";
-            return $"{size}b";
+            if (SizeInBytes || size < 1000) return $"{size:N1}b";
+
+            var m = "kb";
+            double result = size;
+
+            while ((result = result / 1024D) >= 1000)
+            {
+                switch (m)
+                {
+                    case "kb": { m = "mb"; break; }
+                    case "mb": { m = "gb"; break; }
+                    case "gb": { m = "pb"; break; }
+                    default: throw new NotImplementedException();
+                }
+            }
+
+            return $"{result:N1}{m}";
         }
     }
 }
