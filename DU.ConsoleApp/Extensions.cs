@@ -21,7 +21,7 @@
             var m = "kb";
             double result = size;
 
-            while ((result = result / 1024D) >= 1000)
+            while ((result /= 1024D) >= 1000)
             {
                 switch (m)
                 {
