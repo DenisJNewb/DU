@@ -16,7 +16,7 @@
 
         public static string SizeToString(this long size)
         {
-            if (SizeInBytes || size < 1000) return $"{size:N1}b";
+            if (SizeInBytes || size < 1000) return $"{size:N1} b";
 
             var m = "kb";
             double result = size;

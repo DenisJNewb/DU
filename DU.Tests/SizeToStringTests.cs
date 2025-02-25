@@ -9,11 +9,11 @@ namespace DU.Tests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(0L.SizeToString(), Is.EqualTo("0,0b"));
-                Assert.That(1L.SizeToString(), Is.EqualTo("1,0b"));
-                Assert.That(10L.SizeToString(), Is.EqualTo("10,0b"));
-                Assert.That(100L.SizeToString(), Is.EqualTo("100,0b"));
-                Assert.That(999L.SizeToString(), Is.EqualTo("999,0b"));
+                Assert.That(0L.SizeToString(), Is.EqualTo("0,0 b"));
+                Assert.That(1L.SizeToString(), Is.EqualTo("1,0 b"));
+                Assert.That(10L.SizeToString(), Is.EqualTo("10,0 b"));
+                Assert.That(100L.SizeToString(), Is.EqualTo("100,0 b"));
+                Assert.That(999L.SizeToString(), Is.EqualTo("999,0 b"));
             });
         }
 
