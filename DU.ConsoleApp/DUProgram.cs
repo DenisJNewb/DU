@@ -71,7 +71,7 @@
                 dir.Size.SizeToConsole(dir.Name, true, dir.HasInaccessible);
             }
 
-            foreach (var file in parentDirFiles)
+            foreach (var file in parentDirFiles.OrderByDescending(d => d.Size))
             {
                 file.Size.SizeToConsole(file.Name, false, false);
             }
