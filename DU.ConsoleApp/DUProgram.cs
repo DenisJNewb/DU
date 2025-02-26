@@ -30,7 +30,7 @@
                 .ToArray();
 
             var parentDirFilesSize = parentDirFiles.Sum(f => f.Size);
-            parentDirFilesSize.SizeToConsole(".", false, false);
+            parentDirFilesSize.SizeToConsole(".files", false, false);
 
             var parentDirChildDirsSize = 0L;
             var parentAnyInaccessible = false;
