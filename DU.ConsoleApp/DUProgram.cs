@@ -30,7 +30,7 @@
                 .ToArray();
 
             var parentDirFilesSize = parentDirFiles.Sum(f => f.Size);
-            parentDirFilesSize.SizeToConsole(".files", false, false);
+            parentDirFilesSize.SizeToConsole(".files", false, false, EndLine.Space);
 
             var parentDirChildDirsSize = 0L;
             var parentAnyInaccessible = false;
@@ -63,17 +63,17 @@
                 })
                 .ToArray();
 
-            parentDirChildDirsSize.SizeToConsole(".dirs", true, parentAnyInaccessible);
-            (parentDirFilesSize + parentDirChildDirsSize).SizeToConsole(".total", true, parentAnyInaccessible);
+            parentDirChildDirsSize.SizeToConsole(".dirs", true, parentAnyInaccessible, EndLine.Space);
+            (parentDirFilesSize + parentDirChildDirsSize).SizeToConsole(".total", true, parentAnyInaccessible, EndLine.NewLine);
 
             foreach (var dir in childDirectories.OrderByDescending(d => d.Size))
             {
-                dir.Size.SizeToConsole(dir.Name, true, dir.HasInaccessible);
+                dir.Size.SizeToConsole(dir.Name, true, dir.HasInaccessible, EndLine.NewLine);
             }
 
             foreach (var file in parentDirFiles.OrderByDescending(d => d.Size))
             {
-                file.Size.SizeToConsole(file.Name, false, false);
+                file.Size.SizeToConsole(file.Name, false, false, EndLine.NewLine);
             }
 
             if (args.Contains("-w"))
