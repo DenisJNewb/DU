@@ -5,16 +5,17 @@
         private static void Main(string[] args)
         {
             DirectoryInfo parentDirectory = null!;
+            var shortAnswer = false;
 
             for (var i = 0; i < args.Length; i++)
             {
                 var arg = args[i];
 
-                if (arg == "-b") Extensions.SizeInBytes = true;
-                else if (arg == "-d")
+                switch (arg)
                 {
-                    parentDirectory = new DirectoryInfo(args[i + 1]);
-                    i++;
+                    case "-b": Extensions.SizeInBytes = true; break;
+                    case "-s": shortAnswer = true; break;
+                    case "-d": parentDirectory = new DirectoryInfo(args[i + 1]); i++; break;
                 }
             }
 
@@ -23,7 +24,11 @@
             if (!parentDirectory.Exists) throw new DirectoryNotFoundException(parentDirectory.FullName);
 
             Console.Title = parentDirectory.FullName;
-            Console.WriteLine("[IE] - Directory or Sub dirs has inaccessible files or dirs");
+
+            if (!shortAnswer)
+            {
+                Console.WriteLine("[IE] - Directory or Sub dirs has inaccessible files or dirs");
+            }
 
             var parentDirFiles = parentDirectory.EnumerateFiles()
                 .Select(f => new { f.Name, Size = f.Length })
@@ -66,14 +71,17 @@
             parentDirChildDirsSize.SizeToConsole(".dirs", true, parentAnyInaccessible, EndLine.Space);
             (parentDirFilesSize + parentDirChildDirsSize).SizeToConsole(".total", true, parentAnyInaccessible, EndLine.NewLine);
 
-            foreach (var dir in childDirectories.OrderByDescending(d => d.Size))
+            if (!shortAnswer)
             {
-                dir.Size.SizeToConsole(dir.Name, true, dir.HasInaccessible, EndLine.NewLine);
-            }
+                foreach (var dir in childDirectories.OrderByDescending(d => d.Size))
+                {
+                    dir.Size.SizeToConsole(dir.Name, true, dir.HasInaccessible, EndLine.NewLine);
+                }
 
-            foreach (var file in parentDirFiles.OrderByDescending(d => d.Size))
-            {
-                file.Size.SizeToConsole(file.Name, false, false, EndLine.NewLine);
+                foreach (var file in parentDirFiles.OrderByDescending(d => d.Size))
+                {
+                    file.Size.SizeToConsole(file.Name, false, false, EndLine.NewLine);
+                }
             }
 
             if (args.Contains("-w"))
